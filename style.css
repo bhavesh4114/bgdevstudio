@@ -293,8 +293,13 @@ body.has-shared-header {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  z-index: 9999;
+  z-index: 14050;
   font-family: "Space Grotesk", Manrope, "Segoe UI", sans-serif;
+  cursor: auto;
+}
+
+.bgds-chat-widget * {
+  cursor: auto;
 }
 
 .bgds-fab {
@@ -329,7 +334,7 @@ body.has-shared-header {
   inset: -8px;
   border-radius: 50%;
   border: 1px solid rgba(122, 92, 255, 0.28);
-  animation: bgdsRing 2.2s ease-out infinite;
+  opacity: 0.65;
   pointer-events: none;
 }
 
@@ -398,10 +403,91 @@ body.has-shared-header {
 }
 
 .bgds-chat-body {
-  padding: 14px 16px;
-  color: var(--tgw-text);
-  font-size: 14px;
-  line-height: 1.5;
+  padding: 12px;
+  min-height: 190px;
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bgds-msg {
+  max-width: 88%;
+  padding: 9px 11px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.bgds-msg.is-bot {
+  color: #dff0ff;
+  background: rgba(70, 135, 255, 0.18);
+  border: 1px solid rgba(116, 164, 255, 0.24);
+  align-self: flex-start;
+}
+
+.bgds-msg.is-user {
+  color: #f7faff;
+  background: rgba(122, 92, 255, 0.28);
+  border: 1px solid rgba(181, 159, 255, 0.28);
+  align-self: flex-end;
+}
+
+.bgds-msg.is-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 52px;
+}
+
+.bgds-msg.is-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b8d7ff;
+  opacity: 0.45;
+  animation: bgdsTyping 1s infinite ease-in-out;
+}
+
+.bgds-msg.is-typing span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.bgds-msg.is-typing span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+.bgds-chat-whatsapp-wrap {
+  padding: 0 12px 10px;
+  display: none;
+}
+
+.bgds-chat-whatsapp-wrap.is-visible {
+  display: block;
+}
+
+.bgds-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e9f6ff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(117, 173, 255, 0.35);
+  background: rgba(39, 185, 116, 0.2);
+  box-shadow: 0 0 16px rgba(39, 185, 116, 0.12);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.bgds-wa-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(39, 185, 116, 0.3);
+  box-shadow: 0 0 18px rgba(39, 185, 116, 0.22);
 }
 
 .bgds-chat-input-wrap {
@@ -410,7 +496,7 @@ body.has-shared-header {
   padding: 12px 12px 14px;
 }
 
-.bgds-chat-input {
+.bgds-chat-widget .bgds-chat-input {
   flex: 1;
   min-width: 0;
   border: 1px solid rgba(135, 162, 220, 0.28);
@@ -418,17 +504,30 @@ body.has-shared-header {
   outline: none;
   padding: 12px 13px;
   font-size: 14px;
-  color: #f2f7ff;
-  background: rgba(10, 16, 29, 0.54);
+  color: #eef4ff !important;
+  background: rgba(9, 16, 31, 0.92) !important;
+  -webkit-text-fill-color: #eef4ff !important;
+  caret-color: #7eb8ff;
+  appearance: none;
 }
 
-.bgds-chat-input::placeholder {
+.bgds-chat-widget .bgds-chat-input::placeholder {
   color: #96a9cc;
+  opacity: 1;
 }
 
-.bgds-chat-input:focus {
+.bgds-chat-widget .bgds-chat-input:focus {
   border-color: rgba(97, 169, 255, 0.72);
   box-shadow: 0 0 0 3px rgba(69, 137, 255, 0.2);
+}
+
+.bgds-chat-widget .bgds-chat-input:-webkit-autofill,
+.bgds-chat-widget .bgds-chat-input:-webkit-autofill:hover,
+.bgds-chat-widget .bgds-chat-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #eef4ff !important;
+  transition: background-color 9999s ease-in-out 0s;
+  box-shadow: 0 0 0 1000px rgba(9, 16, 31, 0.92) inset !important;
+  border: 1px solid rgba(97, 169, 255, 0.48);
 }
 
 .bgds-send {
@@ -459,21 +558,18 @@ body.has-shared-header {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.04);
+    transform: scale(1.02);
   }
 }
 
-@keyframes bgdsRing {
-  0% {
-    transform: scale(.88);
-    opacity: .7;
+@keyframes bgdsTyping {
+  0%, 80%, 100% {
+    opacity: 0.35;
+    transform: translateY(0);
   }
-  70% {
-    transform: scale(1.15);
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
   }
 }
 
@@ -495,8 +591,7 @@ body.has-shared-header {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bgds-fab,
-  .bgds-fab-ring {
+  .bgds-fab {
     animation: none;
   }
 }
