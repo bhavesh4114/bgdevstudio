@@ -199,13 +199,110 @@
     });
   };
 
+  const initTelegramWidget = () => {
+    if (document.getElementById('bgdsChatWidget')) return;
+
+    const USERNAME = 'bgdevstudio_bot';
+    const DEFAULT_MSG = 'Hello, I want to build a website.';
+
+    const widget = document.createElement('div');
+    widget.className = 'bgds-chat-widget';
+    widget.id = 'bgdsChatWidget';
+    widget.innerHTML = `
+      <section class="bgds-chat-card" id="bgdsCard" aria-hidden="true">
+        <header class="bgds-chat-head">
+          <div>
+            <h3>BG Dev Studio</h3>
+            <p>We typically reply instantly 🚀</p>
+          </div>
+          <button class="bgds-close" id="bgdsClose" aria-label="Close chat" type="button">×</button>
+        </header>
+        <div class="bgds-chat-body">
+          <p>Hi 👋 Welcome to BG Dev Studio!<br>How can we help you today?</p>
+        </div>
+        <div class="bgds-chat-input-wrap">
+          <input class="bgds-chat-input" id="bgdsInput" type="text" placeholder="Type your message..." maxlength="300" />
+          <button class="bgds-send" id="bgdsSend" type="button" aria-label="Send to Telegram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.4 2.6a1.3 1.3 0 0 0-1.4-.2L2.9 9.3a1.3 1.3 0 0 0 .1 2.5l5.5 1.8 1.8 5.5a1.3 1.3 0 0 0 2.5.1l6.9-17.1a1.3 1.3 0 0 0-.3-1.5Z"></path>
+            </svg>
+          </button>
+        </div>
+      </section>
+      <button class="bgds-fab" id="bgdsFab" aria-label="Open chat" type="button">
+        <span class="bgds-fab-ring"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.6 3.4a2 2 0 0 0-2.1-.3L3.7 9a2 2 0 0 0 .1 3.8l3.6 1.2 1.2 3.6a2 2 0 0 0 3.8.1l5.9-14.8a2 2 0 0 0-.3-2.1ZM9.3 16.4l-.7-2.1 5.5-5.5-4.8 7.6Z"></path>
+        </svg>
+      </button>
+    `;
+
+    document.body.appendChild(widget);
+
+    const fab = widget.querySelector('#bgdsFab');
+    const card = widget.querySelector('#bgdsCard');
+    const closeBtn = widget.querySelector('#bgdsClose');
+    const input = widget.querySelector('#bgdsInput');
+    const sendBtn = widget.querySelector('#bgdsSend');
+
+    if (!fab || !card || !closeBtn || !input || !sendBtn) return;
+
+    const toggleChat = (forceOpen) => {
+      const shouldOpen = typeof forceOpen === 'boolean'
+        ? forceOpen
+        : !card.classList.contains('is-open');
+
+      card.classList.toggle('is-open', shouldOpen);
+      card.setAttribute('aria-hidden', String(!shouldOpen));
+
+      if (shouldOpen) {
+        window.setTimeout(() => input.focus(), 120);
+      }
+    };
+
+    const toStartPayload = (message) => {
+      const utf8 = unescape(encodeURIComponent(message));
+      const b64url = btoa(utf8).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+      return b64url.slice(0, 64);
+    };
+
+    const sendToTelegram = () => {
+      const raw = (input.value || '').trim();
+      const message = raw || DEFAULT_MSG;
+      const startPayload = toStartPayload(message);
+      const url = `https://t.me/${USERNAME}?start=${encodeURIComponent(startPayload)}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    };
+
+    fab.addEventListener('click', () => toggleChat());
+    closeBtn.addEventListener('click', () => toggleChat(false));
+    sendBtn.addEventListener('click', sendToTelegram);
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') sendToTelegram();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!card.classList.contains('is-open')) return;
+      if (!widget.contains(event.target)) toggleChat(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && card.classList.contains('is-open')) {
+        toggleChat(false);
+      }
+    });
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       mountSharedHeader();
       initSharedLoaderAndCursor();
+      initTelegramWidget();
     });
   } else {
     mountSharedHeader();
     initSharedLoaderAndCursor();
+    initTelegramWidget();
   }
 })();
