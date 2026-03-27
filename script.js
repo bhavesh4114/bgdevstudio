@@ -200,22 +200,144 @@
   };
 
   const initAgencyChatWidget = () => {
-    if (document.getElementById('bgdsChatEmbed')) return;
+    if (document.getElementById('bgdsChatWidget')) return;
+
+    const WHATSAPP_NUMBER = '919978449457';
+    const WHATSAPP_PREFILL = 'Hello, I want to know more about your services.';
+    const DEFAULT_FALLBACK = 'Please contact us on WhatsApp for more details.';
+    const WELCOME_MESSAGE = 'Hi 👋 Welcome to BG Dev Studio! Ask anything about websites or apps.';
+
+    const qaRules = [
+      { keywords: ['price', 'cost', 'budget', 'fees'], answer: 'Website starts from ₹5,000 depending on features.' },
+      { keywords: ['time', 'timeline', 'how long', 'delivery'], answer: 'It usually takes 5–10 days to complete a website.' },
+      { keywords: ['services', 'service', 'offer'], answer: 'We provide website, app, and custom software development.' },
+      { keywords: ['contact', 'call', 'reach'], answer: 'You can connect with us on WhatsApp for quick response.' },
+      { keywords: ['portfolio', 'work', 'projects'], answer: 'We have built multiple modern business websites.' },
+      { keywords: ['hosting', 'domain', 'server'], answer: 'We also provide hosting and domain setup.' },
+      { keywords: ['payment', 'upi', 'bank'], answer: 'We accept UPI, bank transfer, and online payments.' },
+      { keywords: ['support', 'help', 'after delivery'], answer: 'We provide full support after delivery.' },
+      { keywords: ['design', 'ui', 'ux'], answer: 'We create modern, responsive UI/UX designs.' },
+      { keywords: ['seo', 'ranking', 'google'], answer: 'Basic SEO is included in all websites.' },
+      { keywords: ['maintenance', 'maintain', 'monthly'], answer: 'We offer monthly maintenance services.' },
+      { keywords: ['mobile', 'responsive', 'phone'], answer: 'All websites are mobile responsive.' },
+      { keywords: ['custom', 'feature', 'integration'], answer: 'We build custom features as per your needs.' },
+      { keywords: ['ecommerce', 'store', 'shop', 'payment gateway'], answer: 'We build online stores with payment integration.' },
+      { keywords: ['app', 'android', 'ios'], answer: 'Yes, we also build custom mobile apps for business needs.' }
+    ];
 
     const widget = document.createElement('div');
-    widget.id = 'bgdsChatEmbed';
-    widget.className = 'bgds-chat-embed';
+    widget.className = 'bgds-chat-widget';
+    widget.id = 'bgdsChatWidget';
     widget.innerHTML = `
-      <iframe
-        src="https://unchaste-indignant-conception.ngrok-free.dev/chatbot/cmn8qb8sz0001ebdozunlh1d5"
-        width="100%"
-        style="height: 100%; min-height: 700px"
-        frameborder="0"
-        title="BG Dev Studio Chatbot"
-        loading="lazy"
-      ></iframe>
+      <section class="bgds-chat-card" id="bgdsCard" aria-hidden="true">
+        <header class="bgds-chat-head">
+          <div>
+            <h3>BG Dev Studio</h3>
+            <p>Quick Help Assistant</p>
+          </div>
+          <button class="bgds-close" id="bgdsClose" aria-label="Close chat" type="button">×</button>
+        </header>
+        <div class="bgds-chat-body" id="bgdsChatBody"></div>
+        <div class="bgds-chat-whatsapp-wrap" id="bgdsWhatsWrap">
+          <a class="bgds-wa-btn" id="bgdsWhatsBtn" target="_blank" rel="noopener noreferrer" href="#">Chat on WhatsApp</a>
+        </div>
+        <div class="bgds-chat-input-wrap">
+          <input class="bgds-chat-input" id="bgdsInput" type="text" placeholder="Type your message..." maxlength="300" />
+          <button class="bgds-send" id="bgdsSend" type="button" aria-label="Send message">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 2.6a1.3 1.3 0 0 0-1.4-.2L2.9 9.3a1.3 1.3 0 0 0 .1 2.5l5.5 1.8 1.8 5.5a1.3 1.3 0 0 0 2.5.1l6.9-17.1a1.3 1.3 0 0 0-.3-1.5Z"></path></svg>
+          </button>
+        </div>
+      </section>
+      <button class="bgds-fab" id="bgdsFab" aria-label="Open chat" type="button">
+        <span class="bgds-fab-ring"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <g fill="#ffffff">
+            <rect x="5.3" y="4.6" width="13.4" height="8.9" rx="4.2"></rect>
+            <rect x="7.3" y="14.3" width="9.4" height="5.6" rx="2.8"></rect>
+            <rect x="9.2" y="2.5" width="1.4" height="2.2" rx="0.7"></rect>
+            <rect x="13.4" y="2.5" width="1.4" height="2.2" rx="0.7"></rect>
+          </g>
+          <circle cx="10" cy="9.1" r="1.05" fill="#1b6dff"></circle>
+          <circle cx="14" cy="9.1" r="1.05" fill="#1b6dff"></circle>
+          <rect x="10.5" y="11.1" width="3" height="0.95" rx="0.45" fill="#1b6dff"></rect>
+        </svg>
+      </button>
     `;
     document.body.appendChild(widget);
+
+    const fab = widget.querySelector('#bgdsFab');
+    const card = widget.querySelector('#bgdsCard');
+    const closeBtn = widget.querySelector('#bgdsClose');
+    const input = widget.querySelector('#bgdsInput');
+    const sendBtn = widget.querySelector('#bgdsSend');
+    const chatBody = widget.querySelector('#bgdsChatBody');
+    const whatsBtn = widget.querySelector('#bgdsWhatsBtn');
+    const whatsWrap = widget.querySelector('#bgdsWhatsWrap');
+    if (!fab || !card || !closeBtn || !input || !sendBtn || !chatBody || !whatsBtn || !whatsWrap) return;
+
+    const toggleChat = (forceOpen) => {
+      const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !card.classList.contains('is-open');
+      card.classList.toggle('is-open', shouldOpen);
+      card.setAttribute('aria-hidden', String(!shouldOpen));
+      if (shouldOpen) window.setTimeout(() => input.focus(), 100);
+    };
+
+    const appendMessage = (text, from) => {
+      const msg = document.createElement('div');
+      msg.className = `bgds-msg ${from === 'user' ? 'is-user' : 'is-bot'}`;
+      msg.textContent = text;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    };
+
+    const appendTyping = () => {
+      const typing = document.createElement('div');
+      typing.className = 'bgds-msg is-bot is-typing';
+      typing.innerHTML = '<span></span><span></span><span></span>';
+      chatBody.appendChild(typing);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return typing;
+    };
+
+    const findReply = (question) => {
+      const lower = question.toLowerCase();
+      for (const rule of qaRules) {
+        if (rule.keywords.some((keyword) => lower.includes(keyword))) return rule.answer;
+      }
+      return DEFAULT_FALLBACK;
+    };
+
+    whatsBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
+    whatsWrap.classList.add('is-visible');
+    appendMessage(WELCOME_MESSAGE, 'bot');
+
+    const handleSend = () => {
+      const text = (input.value || '').trim();
+      if (!text) return;
+      appendMessage(text, 'user');
+      input.value = '';
+      const typingNode = appendTyping();
+      const answer = findReply(text);
+      const delay = 2000 + Math.floor(Math.random() * 1000);
+      window.setTimeout(() => {
+        typingNode.remove();
+        appendMessage(answer, 'bot');
+      }, delay);
+    };
+
+    fab.addEventListener('click', () => toggleChat());
+    closeBtn.addEventListener('click', () => toggleChat(false));
+    sendBtn.addEventListener('click', handleSend);
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') handleSend();
+    });
+    document.addEventListener('click', (event) => {
+      if (!card.classList.contains('is-open')) return;
+      if (!widget.contains(event.target)) toggleChat(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && card.classList.contains('is-open')) toggleChat(false);
+    });
   };
 
   if (document.readyState === 'loading') {
