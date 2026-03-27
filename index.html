@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BG Dev Studio | We Build Websites &amp; Apps That Grow Your Business</title>
+<link rel="icon" type="image/svg+xml" href="assets/bg-logo.svg" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-dim": "#d73357",
+              "on-primary-fixed-variant": "#00207e",
+              "primary-fixed": "#859aff",
+              "surface-container": "#191919",
+              "tertiary": "#69daff",
+              "on-secondary-fixed-variant": "#7511c3",
+              "surface-tint": "#97a9ff",
+              "on-secondary-container": "#e9cdff",
+              "tertiary-dim": "#00c0ea",
+              "on-tertiary-fixed-variant": "#004a5c",
+              "on-surface": "#ffffff",
+              "primary-fixed-dim": "#718bff",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-container": "#004050",
+              "tertiary-fixed-dim": "#00c0ea",
+              "outline": "#757575",
+              "tertiary-container": "#00cffc",
+              "secondary-fixed-dim": "#dbb4ff",
+              "error": "#ff6e84",
+              "surface-container-highest": "#262626",
+              "on-secondary-fixed": "#4f0089",
+              "secondary": "#c180ff",
+              "secondary-container": "#6f00be",
+              "on-secondary": "#33005b",
+              "primary": "#97a9ff",
+              "background": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-dim": "#0e0e0e",
+              "surface-container-lowest": "#000000",
+              "inverse-surface": "#f9f9f9",
+              "tertiary-fixed": "#00cffc",
+              "primary-dim": "#3e65ff",
+              "surface-container-high": "#1f1f1f",
+              "surface": "#0e0e0e",
+              "surface-container-low": "#131313",
+              "secondary-fixed": "#e5c6ff",
+              "on-primary-container": "#001867",
+              "inverse-primary": "#134af1",
+              "secondary-dim": "#9c48ea",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "on-surface-variant": "#ababab",
+              "on-primary": "#002283",
+              "on-tertiary": "#004a5d",
+              "error-container": "#a70138",
+              "surface-variant": "#262626",
+              "outline-variant": "#484848",
+              "inverse-on-surface": "#555555",
+              "on-tertiary-fixed": "#002a35",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#859aff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, #97a9ff 0%, #c180ff 100%);
+        }
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.6);
+            backdrop-filter: blur(20px);
+        }
+    
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            body { overflow-x: hidden; }
+        }
+            html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+            filter: blur(3px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), filter .7s cubic-bezier(.22,1,.36,1);
+            will-change: opacity, transform, filter;
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+        .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.is-visible { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+            .float-slow { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-surface-container-lowest text-on-surface selection:bg-primary/30">
+<!-- TopNavBar -->
+<div id="site-header-root"></div>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+<!-- Ambient Glows -->
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-dim/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary-dim/10 blur-[120px] rounded-full"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-secondary-container/30 border border-secondary/20 mb-6">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-xs font-label font-medium text-secondary-fixed">Next-Gen Digital Agency</span>
+</div>
+<h1 class="font-headline text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter leading-tight mb-6">
+                    We Build Websites &amp; <br/>
+<span class="text-transparent bg-clip-text kinetic-gradient">Apps That Grow</span> <br/>
+                    Your Business
+                </h1>
+<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-xl mb-10">
+                    Transform your ideas into powerful digital solutions with our expert team of developers and designers.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="kinetic-gradient text-on-primary-fixed px-8 py-4 rounded-full font-headline font-bold text-lg hover:scale-95 transition-all duration-200 flex items-center gap-2">
+                        Get Started
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="bg-surface-container-high border border-outline-variant/20 px-8 py-4 rounded-full font-headline font-bold text-lg hover:bg-surface-bright transition-all duration-200">
+                        View Portfolio
+                    </button>
+</div>
+</div>
+<div class="lg:col-span-5 relative hidden lg:block">
+<div class="aspect-square glass-panel rounded-3xl border border-outline-variant/10 overflow-hidden rotate-3 shadow-2xl">
+<img alt="Coding environment" class="w-full h-full object-cover opacity-80" data-alt="Close-up of a high-end computer screen displaying elegant lines of code in a dark mode editor with blue and purple syntax highlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhKmMxSjLN0y2YFTAaurK94IBNfQfoYX9RiMz0VeDORC9E2yPlTPko9eUroVXnCTBXQvgxN9OsferxRNpfUH7sE6yn7GDiJDdicNu5lJuELX5af2SSTNIbywiV2Bp7ZyuP-clDw1bjYPweMR0eH0omaLCLW9BtGvGXeRzQ8n5orcyivgp2E50V5SOpDPXJ2NviQd1voaYE6_6s1UR8zkDcz3skbQ05XpDp52rpYJys3z53ti_Ya01d2IP99vylFDaU4OFEyq3GGE17"/>
+</div>
+<div class="absolute -bottom-6 -left-6 glass-panel p-6 rounded-2xl border border-outline-variant/10 shadow-xl -rotate-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full kinetic-gradient flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="bolt">bolt</span>
+</div>
+<div>
+<div class="text-xl font-bold font-headline">99.9%</div>
+<div class="text-xs text-on-surface-variant">Performance Score</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Preview -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="mb-16">
+<span class="text-secondary font-label font-bold tracking-widest uppercase text-xs">Our Expertise</span>
+<h2 class="font-headline text-4xl font-bold tracking-tight mt-2">Comprehensive Digital Services</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Website Development -->
+<div class="group bg-surface-container-high p-8 rounded-xl hover:bg-surface-bright transition-all duration-500 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="language">language</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-4">Website Development</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed">High-performance, scalable websites tailored to your brand identity and business goals.</p>
+</div>
+<!-- Mobile App Development -->
+<div class="group bg-surface-container-high p-8 rounded-xl hover:bg-surface-bright transition-all duration-500 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="smartphone">smartphone</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-4">Mobile App Development</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed">Native and cross-platform mobile experiences that engage users on every device.</p>
+</div>
+<!-- E-commerce Solutions -->
+<div class="group bg-surface-container-high p-8 rounded-xl hover:bg-surface-bright transition-all duration-500 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-lg bg-tertiary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-4">E-commerce Solutions</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed">Custom online stores designed to maximize conversions and streamline operations.</p>
+</div>
+<!-- UI/UX Design -->
+<div class="group bg-surface-container-high p-8 rounded-xl hover:bg-surface-bright transition-all duration-500 border border-outline-variant/5">
+<div class="w-14 h-14 rounded-lg bg-error/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-error text-3xl" data-icon="draw">draw</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-4">UI/UX Design</h3>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed">User-centric design systems that balance aesthetic beauty with functional precision.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us (Bento Grid) -->
+<section class="py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="font-headline text-4xl font-bold tracking-tight">Why Choose Us</h2>
+<p class="text-on-surface-variant mt-4 max-w-2xl mx-auto">We combine technical excellence with strategic thinking to deliver results that matter.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[240px]">
+<div class="md:col-span-2 bg-surface-container-high rounded-3xl p-8 flex flex-col justify-end relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8">
+<span class="material-symbols-outlined text-primary text-6xl opacity-20 group-hover:opacity-100 transition-opacity" data-icon="speed">speed</span>
+</div>
+<h3 class="font-headline text-2xl font-bold relative z-10">Fast Delivery</h3>
+<p class="text-on-surface-variant mt-2 relative z-10 max-w-md">Optimized workflows and agile methodologies ensure your project launches on schedule without compromising quality.</p>
+</div>
+<div class="bg-secondary-container/20 rounded-3xl p-8 border border-secondary/10 flex flex-col items-center justify-center text-center group">
+<span class="material-symbols-outlined text-secondary text-5xl mb-4 group-hover:scale-110 transition-transform" data-icon="payments">payments</span>
+<h3 class="font-headline text-2xl font-bold">Affordable Pricing</h3>
+<p class="text-xs text-on-secondary-container mt-2">Premium quality at competitive rates.</p>
+</div>
+<div class="bg-surface-container-high rounded-3xl p-8 flex flex-col justify-center group">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="palette">palette</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Modern UI</h3>
+</div>
+<p class="text-on-surface-variant text-sm">Trend-setting designs that set your business apart from the competition.</p>
+</div>
+<div class="md:col-span-2 bg-gradient-to-br from-primary-dim/20 to-secondary-dim/20 rounded-3xl p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 group overflow-hidden">
+<div>
+<h3 class="font-headline text-3xl font-bold">100% Client Satisfaction</h3>
+<p class="text-on-surface-variant mt-2">Our commitment to excellence reflected in every pixel.</p>
+</div>
+<div class="flex -space-x-3 sm:-space-x-4 self-end sm:self-auto shrink-0">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-surface-container"></div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-primary"></div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-secondary"></div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-tertiary flex items-center justify-center text-xs font-bold">+50</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio Preview -->
+<section class="py-24 bg-surface-container-low overflow-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="text-primary font-label font-bold tracking-widest uppercase text-xs">Our Work</span>
+<h2 class="font-headline text-4xl font-bold tracking-tight mt-2">Recent Projects</h2>
+</div>
+<button class="text-primary font-headline font-bold flex items-center gap-2 hover:gap-4 transition-all">
+                    View All Projects
+                    <span class="material-symbols-outlined" data-icon="trending_flat">trending_flat</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="group">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-surface-container-highest relative">
+<img alt="Salon Website" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Modern minimalist website interface for a luxury hair salon featuring soft lighting, elegant typography, and high-resolution lifestyle imagery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV6bJ4HwiP_kHy7rj-4_EI3EIWoIb6ryTD_X99okKyyu3_83GyKeod7L8JoosU_L6uTGW5fJLxyuC_IQ2wfzuFKHYqwKEfWUAsivcjpaXACQuiGjbBy82xzU2qGMkv2cOkIGp5Mao-FWMDJKCk5oZym5jEcwZvoA2FLq4pboWSBagxSZcBLWFUp853_g3ThM9AXOhOrqzIqmTaJVmZyXcipN1v84QqexrfuJGTdQUoRNmtTv7Pj1Cg4y3zbb0WxF8MECRry3Frx2io"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="visibility">visibility</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-1">Salon Website</h3>
+<p class="text-on-surface-variant text-sm">Luxury UX &amp; Appointment System</p>
+</div>
+<!-- Project 2 -->
+<div class="group">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-surface-container-highest relative">
+<img alt="Real Estate Platform" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Clean and professional real estate search portal showing property listings with a map view and intuitive filter controls in a sleek dark interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9kU9ipcHseWL-HSaHbSozihebutP7PkJB2Q_xFSiD4CPvzVP6BFcwluIxoN-dTKtjkecn75J3SUYzJhC8vxJl2vopUiTTUJSBBiMsqkPBOTOkzgMNNUgvNYnTsuBCnLQnmQ-ZZciVeazmUeiDouM6gW5w-z7qgY8ALNOILtuKq9gDQy5wqUiB4SfmQX_MT9MOtS1rJwNk6Tp-xIy7DD9Fuy69t_EAgn-GJabn7YPMXON7nFTY2yjfA8iiBOJgKCQIxM-c4eMG8oA6"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="visibility">visibility</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-1">Real Estate Platform</h3>
+<p class="text-on-surface-variant text-sm">Property Listings &amp; CRM Integration</p>
+</div>
+<!-- Project 3 -->
+<div class="group">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-surface-container-highest relative">
+<img alt="Society Management System" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Dashboard interface for a society management application featuring analytics charts, resident lists, and administrative task panels in a sophisticated dark theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJp16D7NJsPi7owwXd1wclLZSluIO9PojyFV8JEYLCpsH4I8a4Li4FmyUNP1rfMHEgbdWtc7m-eWygFtHmk3aGrU3LlHJ8cAyj31BvBh4wP2XgILX9yfwUmlpIHiFNadrSAzXTKdSGBmC0k3HpBi0Lqcc72a9NXgfBJ06cakqrD0mq28zDmGjuTx91oS-r01FD-k7d4HtqfLd3TGKo7oADONlYxCaqHufkKG7-Kg2VU3Us3gVPKYl20F8kQzbUxQzqtNu1z26dW5tL"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="visibility">visibility</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-1">Society Management System</h3>
+<p class="text-on-surface-variant text-sm">Complex SaaS Dashboard &amp; Billing</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Call To Action -->
+<section class="py-24 bg-surface-container-lowest relative overflow-hidden">
+<div class="absolute inset-0 kinetic-gradient opacity-10 blur-[100px] rounded-full scale-150"></div>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+<h2 class="font-headline text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter mb-8 leading-tight">
+                Let's build your dream <br/> project together
+            </h2>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="kinetic-gradient text-on-primary-fixed px-10 py-5 rounded-full font-headline font-bold text-xl hover:scale-95 transition-all duration-200 inline-flex items-center justify-center" href="https://wa.me/919978449457?text=Hi%20BG%20Dev%20Studio%2C%20please%20share%20your%20service%20details%20and%20pricing." rel="noopener noreferrer" target="_blank">
+                    Start a Conversation
+                </a>
+<button class="bg-surface-container-high px-10 py-5 rounded-full font-headline font-bold text-xl border border-outline-variant/20 hover:bg-surface-bright transition-all">
+                    Email Us
+                </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-black w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-neutral-900">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="col-span-1">
+<div class="text-lg font-black text-white mb-4">BG Dev Studio</div>
+<p class="font-manrope text-sm text-neutral-400 max-w-xs">
+                    Pioneering digital excellence through innovative design and high-performance development.
+                </p>
+</div>
+<div class="col-span-1">
+<h4 class="text-white font-bold mb-4 font-headline text-sm uppercase tracking-widest">Navigation</h4>
+<div class="flex flex-col gap-2">
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="index.html">Home</a>
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="about.html">About</a>
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="service.html">Services</a>
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="portfolio.html">Portfolio</a>
+</div>
+</div>
+<div class="col-span-1">
+<h4 class="text-white font-bold mb-4 font-headline text-sm uppercase tracking-widest">Connect</h4>
+<div class="flex flex-col gap-2">
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="mailto:bhaveshgohel4114@gmail.com">bhaveshgohel4114@gmail.com</a>
+<p class="font-manrope text-sm text-neutral-500">+91 9978449457</p>
+<p class="font-manrope text-sm text-neutral-500">Ahmedabad, India</p>
+</div>
+</div>
+<div class="col-span-1">
+<h4 class="text-white font-bold mb-4 font-headline text-sm uppercase tracking-widest">Newsletter</h4>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-2 text-sm focus:border-primary transition-colors outline-none" placeholder="Email Address" type="email"/>
+<button class="absolute right-2 top-1.5 text-primary">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-900/50 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex gap-6">
+<span class="text-neutral-500 hover:text-white transition-colors text-xs">Privacy Policy</span>
+<span class="text-neutral-500 hover:text-white transition-colors text-xs">Terms of Service</span>
+</div>
+</div>
+</footer>
+<script>
+(function () {
+  const sectionTargets = document.querySelectorAll('section, footer');
+  const cardTargets = document.querySelectorAll('.group, .glass-panel, .rounded-xl, .rounded-2xl, .rounded-3xl');
+  const unique = new Set();
+  [...sectionTargets, ...cardTargets].forEach((el) => {
+    if (!el || unique.has(el)) return;
+    unique.add(el);
+    el.classList.add('reveal');
+  });
+
+  document.querySelectorAll('.glass-panel').forEach((el) => el.classList.add('float-slow'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  let i = 0;
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.style.transitionDelay = (i % 6) * 60 + 'ms';
+    observer.observe(el);
+    i += 1;
+  });
+})();
+</script>
+
+<script src="script.js" defer></script>
+</body></html>
+
+
+
+
+
+
+
+

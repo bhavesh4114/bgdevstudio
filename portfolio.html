@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-dim": "#d73357",
+              "on-primary-fixed-variant": "#00207e",
+              "primary-fixed": "#859aff",
+              "surface-container": "#191919",
+              "tertiary": "#69daff",
+              "on-secondary-fixed-variant": "#7511c3",
+              "surface-tint": "#97a9ff",
+              "on-secondary-container": "#e9cdff",
+              "tertiary-dim": "#00c0ea",
+              "on-tertiary-fixed-variant": "#004a5c",
+              "on-surface": "#ffffff",
+              "primary-fixed-dim": "#718bff",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-container": "#004050",
+              "tertiary-fixed-dim": "#00c0ea",
+              "outline": "#757575",
+              "tertiary-container": "#00cffc",
+              "secondary-fixed-dim": "#dbb4ff",
+              "error": "#ff6e84",
+              "surface-container-highest": "#262626",
+              "on-secondary-fixed": "#4f0089",
+              "secondary": "#c180ff",
+              "secondary-container": "#6f00be",
+              "on-secondary": "#33005b",
+              "primary": "#97a9ff",
+              "background": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-dim": "#0e0e0e",
+              "surface-container-lowest": "#000000",
+              "inverse-surface": "#f9f9f9",
+              "tertiary-fixed": "#00cffc",
+              "primary-dim": "#3e65ff",
+              "surface-container-high": "#1f1f1f",
+              "surface": "#0e0e0e",
+              "surface-container-low": "#131313",
+              "secondary-fixed": "#e5c6ff",
+              "on-primary-container": "#001867",
+              "inverse-primary": "#134af1",
+              "secondary-dim": "#9c48ea",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "on-surface-variant": "#ababab",
+              "on-primary": "#002283",
+              "on-tertiary": "#004a5d",
+              "error-container": "#a70138",
+              "surface-variant": "#262626",
+              "outline-variant": "#484848",
+              "inverse-on-surface": "#555555",
+              "on-tertiary-fixed": "#002a35",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#859aff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(19, 19, 19, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .kinetic-gradient {
+        background: linear-gradient(135deg, #97a9ff 0%, #c180ff 100%);
+      }
+    
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            body { overflow-x: hidden; }
+        }
+            html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+            filter: blur(3px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), filter .7s cubic-bezier(.22,1,.36,1);
+            will-change: opacity, transform, filter;
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+        .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.is-visible { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+            .float-slow { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+<link rel="icon" type="image/svg+xml" href="assets/bg-logo.svg" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<div id="site-header-root"></div>
+<main class="pt-32 pb-20">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+<div class="max-w-3xl">
+<span class="text-secondary font-label text-sm tracking-widest uppercase mb-4 block">Our Work</span>
+<h1 class="text-4xl sm:text-5xl md:text-8xl font-headline font-extrabold tracking-tighter mb-8 leading-[0.9]">
+                    Digital <span class="text-outline-variant opacity-40">Artifacts.</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-xl leading-relaxed">
+                    A curated selection of high-precision digital instruments built for the modern infinite. From complex systems to elegant interfaces.
+                </p>
+</div>
+</section>
+<!-- Projects Bento Grid -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Project 1: Salon Website (Large Feature) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-low transition-all duration-500 hover:bg-surface-container-high">
+<div class="aspect-[16/10] w-full overflow-hidden">
+<img alt="Salon Website UI" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60" data-alt="Modern minimalist hair salon interior with soft cinematic lighting, warm wood textures, and sleek black furniture, high-end photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjPEPKX1LAh6QFTFoynkC6MZ01rS9UWgDjvfzTAZdFQOuxXeinEvEybxd470u8TBMgFtZX9nfSS7I2wMr1CgMyz_RX-ybR3nHVxKlyO1NnRWVYaNKouffLlPDVfHJ4Vs7qwxJETzdWGyxKY7N5eNS7fWkJ1IXZ_kyPUeh4T-KNXNmMuknjB1FD9aWNldQfuyJDdxq3uyqTjCEDXCFv7OnikbN6f9bDXZl83DposvX3YItKsB02QJkOtR3LiDvVphiK73amA0jmC6tb"/>
+</div>
+<div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black via-black/20 to-transparent">
+<div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="px-3 py-1 rounded-md bg-secondary-container text-on-secondary-container text-xs font-label mb-4 inline-block">Web Experience</span>
+<h3 class="text-4xl font-headline font-bold mb-2">Salon Website</h3>
+<p class="text-on-surface-variant max-w-md mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                Online booking system with modern UI design, optimized for seamless client appointments and stylist management.
+                            </p>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="calendar_month">calendar_month</span>
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+<span class="material-symbols-outlined text-primary" data-icon="smartphone">smartphone</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Project 2: Real Estate Platform (Tall Sidebar) -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl bg-surface-container-low transition-all duration-500 hover:bg-surface-container-high">
+<div class="h-full min-h-[400px] w-full relative">
+<img alt="Real Estate Platform" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-50" data-alt="Luxurious modern villa architecture with glass walls at dusk, glowing interior lights, reflection on a calm infinity pool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIa9kArMZBpignC70Ym0h8rNqOkzfEoKvt5jIlSOtXcvNhjcUxc2fQCg1IduIMRXTJxQ5KWm4gAyOFT5f6B_zuKDZTdQ4KXEay42mhGlVf8Dck7dUFiR0w_xUP66Bp0e4K_gK1ENWrHCK51-8GQr_QxjjMqqePdizSKuZXkV3Aj3C4QxLnj_nQB_n6nKkAbgEz5hZIQK9URTQcm8QF4kN0wEJLobvUhcDB534pNnkHjje128-7njPTXGMoEeBGfwg7kkiHj9TTtS7S"/>
+<div class="absolute inset-0 p-8 flex flex-col justify-between bg-gradient-to-b from-black/40 via-transparent to-black">
+<div class="flex justify-end">
+<div class="w-12 h-12 rounded-full glass-card flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+<span class="material-symbols-outlined text-white" data-icon="arrow_outward">arrow_outward</span>
+</div>
+</div>
+<div>
+<span class="px-3 py-1 rounded-md bg-secondary-container text-on-secondary-container text-xs font-label mb-4 inline-block">SaaS Platform</span>
+<h3 class="text-2xl font-headline font-bold mb-2">Real Estate Platform</h3>
+<p class="text-on-surface-variant text-sm mb-4">Property listing website with advanced search and intelligent filters.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Project 3: Society Management System (Bottom Wide) -->
+<div class="md:col-span-12 group relative overflow-hidden rounded-xl bg-surface-container-low transition-all duration-500 hover:bg-surface-container-high border border-outline-variant/10">
+<div class="flex flex-col md:flex-row h-full">
+<div class="p-12 md:w-1/2 flex flex-col justify-center">
+<span class="text-primary font-label text-xs tracking-widest mb-4 block">Enterprise Solution</span>
+<h3 class="text-4xl font-headline font-bold mb-4">Society Management System</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                                A comprehensive maintenance billing and payment system designed for large residential complexes. Automated invoicing, digital receipts, and member management.
+                            </p>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-sm">Fintech</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-sm">Automation</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-sm">Dashboard</span>
+</div>
+</div>
+<div class="md:w-1/2 relative min-h-[300px] overflow-hidden">
+<img alt="Society Management UI" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" data-alt="Abstract architectural lines of a glass skyscraper reaching towards a dark blue sky, sharp angles, futuristic corporate vibe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgFBsfHXHB66SOQ3DmVvAbNu8TZpjbWE9GnWfG_oDCUkHvH1ByAnClZONa0Rx8tRw4TEkzwC_A0SOhZO6gcJGYiabcVR-E5hEPkBBKnOC8u8wfpHILkK4kL9DkYs2HfEieCerfvOKDDp2XO3Et0rRM4uIAao515Jqnd_89nyVicJqjQePB--DbgE58LEEHO97LwyKsPc6x9k-okGHO7fhD0TZ9wopBYvAUkUUQ8mQS9ib4QrgqZooaePcCMSPWsTVLFzhNu2O2bCKo"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low to-transparent md:block hidden"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
+<div class="glass-card rounded-2xl p-12 md:p-20 text-center relative overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary-dim/10 blur-[120px] rounded-full"></div>
+<h2 class="text-3xl sm:text-4xl md:text-6xl font-headline font-bold mb-8 relative z-10">Ready to build your <br/><span class="text-transparent bg-clip-text kinetic-gradient">next vision?</span></h2>
+<button class="kinetic-gradient text-on-primary px-10 py-4 rounded-full text-lg font-bold tracking-tight hover:scale-105 transition-transform relative z-10">
+                    Collaborate Now
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-black w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-neutral-900">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="md:col-span-1">
+<div class="text-lg font-black text-white mb-4">BG Dev Studio</div>
+<p class="font-manrope text-sm text-neutral-400 leading-relaxed">
+                    Crafting high-precision digital instruments for the forward-thinking enterprise.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 text-sm uppercase tracking-widest">Navigation</h4>
+<div class="flex flex-col space-y-2">
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="index.html">Home</a>
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="about.html">About</a>
+<a class="font-manrope text-sm text-white transition-colors" href="portfolio.html">Portfolio</a>
+<a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="service.html">Services</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 text-sm uppercase tracking-widest">Connect</h4>
+<div class="flex flex-col space-y-2">
+<span class="font-manrope text-sm text-neutral-500">bhaveshgohel4114@gmail.com</span>
+<span class="font-manrope text-sm text-neutral-500">+91 9978449457</span>
+<span class="font-manrope text-sm text-neutral-500">Ahmedabad, India</span>
+</div>
+</div></div>
+</footer>
+<script>
+(function () {
+  const sectionTargets = document.querySelectorAll('section, footer');
+  const cardTargets = document.querySelectorAll('.group, .glass-panel, .rounded-xl, .rounded-2xl, .rounded-3xl');
+  const unique = new Set();
+  [...sectionTargets, ...cardTargets].forEach((el) => {
+    if (!el || unique.has(el)) return;
+    unique.add(el);
+    el.classList.add('reveal');
+  });
+
+  document.querySelectorAll('.glass-panel').forEach((el) => el.classList.add('float-slow'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  let i = 0;
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.style.transitionDelay = (i % 6) * 60 + 'ms';
+    observer.observe(el);
+    i += 1;
+  });
+})();
+</script>
+
+<script src="script.js" defer></script>
+</body></html>
+
+
+
+
+
+
+
+
+

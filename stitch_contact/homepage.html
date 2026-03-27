@@ -1,0 +1,975 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BG Dev Studio | Premium Digital Agency</title>
+<link rel="icon" type="image/svg+xml" href="assets/bg-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg: #07090f;
+      --bg-soft: #0d1220;
+      --card: rgba(16, 20, 35, 0.58);
+      --text: #f4f7ff;
+      --muted: #b8bfd9;
+      --line: rgba(255, 255, 255, 0.12);
+      --neon-a: #3ea0ff;
+      --neon-b: #8d4dff;
+      --glow: 0 0 20px rgba(62, 160, 255, 0.45), 0 0 36px rgba(141, 77, 255, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Manrope, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 15% 20%, rgba(62,160,255,.16), transparent 32%),
+                  radial-gradient(circle at 85% 8%, rgba(141,77,255,.16), transparent 30%),
+                  linear-gradient(135deg, #07090f, #090d18 42%, #0b1020);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #06080f;
+      display: grid;
+      place-items: center;
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+
+    .page-loader.hidden { opacity: 0; visibility: hidden; }
+
+    .loader-ring {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.15);
+      border-top-color: var(--neon-a);
+      border-right-color: var(--neon-b);
+      animation: spin 1s linear infinite;
+      box-shadow: var(--glow);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #fff;
+    }
+
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(141, 77, 255, 0.8);
+      box-shadow: 0 0 16px rgba(141, 77, 255, 0.4);
+      transition: width .18s ease, height .18s ease, border-color .18s ease;
+    }
+
+    .cursor-ring.active {
+      width: 50px;
+      height: 50px;
+      border-color: rgba(62, 160, 255, 0.9);
+    }
+
+    .site-wrap {
+      position: relative;
+      opacity: 0;
+      animation: pageFade .8s ease .25s forwards;
+    }
+
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container { width: min(1160px, 92vw); margin: 0 auto; }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 20px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 100;
+      margin-top: 14px;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      gap: 14px;
+    }
+
+    .brand {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      box-shadow: 0 0 16px rgba(62, 160, 255, 0.35);
+      flex: 0 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #d6dbf4;
+      font-size: 0.92rem;
+      transition: color .25s ease;
+    }
+
+    .nav-links button {
+      background: none;
+      border: none;
+      color: #d6dbf4;
+      font: inherit;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: color .25s ease;
+    }
+
+    .nav-links a:hover { color: #fff; }
+    .nav-links button:hover { color: #fff; }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 12px 22px;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--neon-a), var(--neon-b));
+      box-shadow: var(--glow);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 0 28px rgba(62,160,255,.65), 0 0 40px rgba(141,77,255,.55); }
+    .btn-ghost { border-color: var(--line); color: var(--text); }
+    .btn-ghost:hover { transform: translateY(-2px) scale(1.03); border-color: rgba(62,160,255,.55); box-shadow: 0 0 18px rgba(62,160,255,.28); }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      padding: 60px 0 30px;
+    }
+
+    .parallax-bg {
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 20% 20%, rgba(62,160,255,.2), transparent 34%),
+                  radial-gradient(circle at 80% 28%, rgba(141,77,255,.2), transparent 30%),
+                  radial-gradient(circle at 60% 72%, rgba(62,160,255,.14), transparent 34%);
+      transform: translateY(0);
+      will-change: transform;
+    }
+
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 30px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: #d8e5ff;
+      font-size: .82rem;
+      margin-bottom: 18px;
+      background: rgba(12, 18, 33, .58);
+    }
+
+    .hero h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 4.4vw, 4.3rem);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .type-line {
+      color: #fff;
+      min-height: 1.3em;
+    }
+
+    .type-caret {
+      border-right: 2px solid #fff;
+      animation: blink .8s infinite;
+    }
+
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #74b6ff, #ad73ff 58%, #57d2ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p { color: var(--muted); font-size: 1.03rem; max-width: 58ch; margin-bottom: 24px; }
+
+    .hero-card {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+    }
+
+    .stat strong { display: block; font-size: 1.15rem; }
+    .stat span { font-size: .76rem; color: var(--muted); }
+
+    .section { padding: 84px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 24px; }
+    .section h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.55rem, 3.1vw, 2.5rem); }
+    .section p.lead { color: var(--muted); }
+
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+
+    .services-grid,
+    .portfolio-grid,
+    .testimonials-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .service-card,
+    .work-card,
+    .t-card {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before,
+    .work-card::before,
+    .t-card::before {
+      content: "";
+      position: absolute;
+      inset: -30% auto auto -20%;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,160,255,.2), transparent 68%);
+      opacity: 0;
+      transition: opacity .35s ease;
+    }
+
+    .service-card:hover,
+    .work-card:hover,
+    .t-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 34px rgba(13, 18, 38, 0.7), 0 0 20px rgba(62, 160, 255, 0.3);
+      border-color: rgba(116,182,255,.45);
+    }
+
+    .service-card:hover::before,
+    .work-card:hover::before,
+    .t-card:hover::before { opacity: 1; }
+
+    .icon-pill {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(62,160,255,.2), rgba(141,77,255,.18));
+      border: 1px solid rgba(255,255,255,.14);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .service-card h3,
+    .work-card h3,
+    .t-card h3 { margin-bottom: 8px; font-size: 1.12rem; }
+
+    .service-card p,
+    .work-card p,
+    .t-card p { color: var(--muted); font-size: .95rem; }
+
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      background: linear-gradient(140deg, rgba(62,160,255,.26), rgba(141,77,255,.25));
+      border: 1px solid rgba(255,255,255,.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.15) 48%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .8s ease;
+    }
+
+    .work-card:hover .work-thumb::after { transform: translateX(120%); }
+
+    .cta-band {
+      margin-top: 24px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+    }
+
+    .contact-box { padding: 22px; }
+
+    .contact-form { display: grid; gap: 12px; }
+
+    .input,
+    textarea.input {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      font: inherit;
+    }
+
+    .input:focus { border-color: rgba(116,182,255,.65); box-shadow: 0 0 0 3px rgba(116,182,255,.2); }
+
+    .footer {
+      padding: 34px 0 42px;
+      color: var(--muted);
+      font-size: .9rem;
+      border-top: 1px solid var(--line);
+      margin-top: 18px;
+    }
+
+    .wa-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #25d366, #13a84e);
+      box-shadow: 0 8px 24px rgba(19,168,78,.52);
+      z-index: 120;
+      transition: transform .24s ease, box-shadow .24s ease;
+    }
+
+    .wa-float:hover { transform: translateY(-4px) scale(1.06); box-shadow: 0 10px 30px rgba(19,168,78,.68); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .68s cubic-bezier(.22,1,.36,1), transform .68s cubic-bezier(.22,1,.36,1);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .stagger { transition-delay: calc(var(--i, 0) * 90ms); }
+
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 12, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 250;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .popup-card {
+      width: min(560px, 100%);
+      background: rgba(12, 16, 29, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 24px rgba(62, 160, 255, 0.24);
+      padding: 22px;
+      position: relative;
+      transform-origin: center;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .popup-close:hover { transform: scale(1.06); border-color: rgba(116, 182, 255, 0.6); }
+
+    .popup-title { font-family: "Space Grotesk", sans-serif; margin-bottom: 4px; }
+    .popup-sub { color: var(--muted); margin-bottom: 14px; }
+
+    .popup-form { display: grid; gap: 10px; }
+
+    .popup-form .input,
+    .popup-form textarea.input {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .popup-form .input:focus,
+    .popup-form textarea.input:focus {
+      border-color: rgba(116, 182, 255, 0.75);
+      box-shadow: 0 0 0 3px rgba(116, 182, 255, 0.2), 0 0 18px rgba(62, 160, 255, 0.25);
+    }
+
+    .btn-loading {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.86;
+    }
+
+    .btn-loading::after {
+      content: "";
+      width: 15px;
+      height: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin-left: 8px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .popup-status {
+      min-height: 20px;
+      font-size: 0.88rem;
+      color: #a9b4dc;
+    }
+
+    .popup-status.success { color: #8ef1be; }
+    .popup-status.error { color: #ff9ba8; }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .about-grid,
+      .contact-wrap { grid-template-columns: 1fr; }
+
+      .services-grid,
+      .portfolio-grid,
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .cursor-dot, .cursor-ring { display: none; }
+      body { cursor: auto; }
+      .nav-inner { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: space-between; }
+      .services-grid,
+      .portfolio-grid,
+      .testimonials-grid,
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .reveal.visible { opacity: 1; transform: none; transition: none; }
+      .icon-pill, .loader-ring { animation: none; }
+      .site-wrap { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader"><div class="loader-ring"></div></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="site-wrap" id="top">
+    <header class="container nav">
+      <div class="glass nav-inner">
+        <div class="brand">
+          <img class="brand-logo" src="assets/bg-logo.svg" alt="BG Dev Studio logo" />
+          <span>BG Dev Studio</span>
+        </div>
+        <nav class="nav-links">
+          <button type="button" data-scroll="home">Home</button>
+          <button type="button" data-scroll="about">About</button>
+          <button type="button" data-scroll="services">Services</button>
+          <button type="button" data-scroll="portfolio">Portfolio</button>
+          <button type="button" data-scroll="testimonials">Testimonials</button>
+          <button type="button" data-scroll="contact">Contact</button>
+        </nav>
+        <button type="button" class="btn btn-primary hover-target open-quote">Get Free Quote</button>
+      </div>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="parallax-bg" id="parallaxBg"></div>
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="badge">Premium Digital Agency for Modern Brands</span>
+          <h1>
+            We craft
+            <span class="gradient-text">ultra premium</span>
+            digital experiences
+          </h1>
+          <h1 class="type-line"><span id="typedText"></span><span class="type-caret"></span></h1>
+          <p>From conversion-focused websites to scalable products, BG Dev Studio blends strategy, design, and engineering to help your business grow faster.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <button type="button" class="btn btn-primary hover-target open-quote">Get Free Quote</button>
+            <button type="button" class="btn btn-ghost hover-target" data-scroll="portfolio">View Portfolio</button>
+          </div>
+        </div>
+
+        <aside class="glass hero-card reveal">
+          <h3 style="font-family:'Space Grotesk',sans-serif;">Trusted by growing businesses</h3>
+          <p class="lead" style="color:var(--muted);">High-impact digital solutions designed for speed, conversion, and long-term scale.</p>
+          <div class="stats">
+            <div class="stat"><strong>120+</strong><span>Projects</span></div>
+            <div class="stat"><strong>97%</strong><span>Retention</span></div>
+            <div class="stat"><strong>4.9/5</strong><span>Client Rating</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container" id="about">
+      <div class="section-head reveal">
+        <h2>About BG Dev Studio</h2>
+        <p class="lead">Clean systems. Bold visuals. Real business outcomes.</p>
+      </div>
+      <div class="about-grid">
+        <article class="glass" style="padding:24px;" class="reveal">
+          <p class="lead" style="line-height:1.75;">We are a digital agency focused on web, product, and growth experiences. Our team builds premium interfaces, high-performance architecture, and conversion-first user journeys that help brands stand out in competitive markets.</p>
+        </article>
+        <article class="glass" style="padding:24px;" class="reveal">
+          <h3 style="margin-bottom:8px;">Why clients choose us</h3>
+          <p class="lead">Fast communication, design precision, engineering depth, and measurable ROI across every project.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="services">
+      <div class="section-head reveal">
+        <h2>Services</h2>
+        <p class="lead">Full-stack execution for modern businesses</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card reveal stagger hover-target" style="--i:0;">
+          <div class="icon-pill">01</div>
+          <h3>Website Design & Development</h3>
+          <p>High-performance, responsive websites with premium UI and conversion-focused UX.</p>
+        </article>
+        <article class="service-card reveal stagger hover-target" style="--i:1;">
+          <div class="icon-pill">02</div>
+          <h3>Web App Development</h3>
+          <p>Scalable applications, clean architecture, and seamless user flows for growth.</p>
+        </article>
+        <article class="service-card reveal stagger hover-target" style="--i:2;">
+          <div class="icon-pill">03</div>
+          <h3>Brand & UI Systems</h3>
+          <p>Modern identity systems and reusable component libraries for consistency and speed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="portfolio">
+      <div class="section-head reveal">
+        <h2>Portfolio</h2>
+        <p class="lead">Selected premium projects</p>
+      </div>
+      <div class="portfolio-grid">
+        <article class="work-card reveal stagger hover-target" style="--i:0;">
+          <div class="work-thumb"></div>
+          <h3>Luxury Salon Platform</h3>
+          <p>Online booking, CRM sync, and premium visual storytelling.</p>
+        </article>
+        <article class="work-card reveal stagger hover-target" style="--i:1;">
+          <div class="work-thumb"></div>
+          <h3>Real Estate Ecosystem</h3>
+          <p>Lead capture funnel and intelligent listing experience with fast search.</p>
+        </article>
+        <article class="work-card reveal stagger hover-target" style="--i:2;">
+          <div class="work-thumb"></div>
+          <h3>Society SaaS Dashboard</h3>
+          <p>Billing automation, analytics, and role-based admin management.</p>
+        </article>
+      </div>
+      <div class="glass cta-band reveal">
+        <div>
+          <h3 style="margin-bottom:4px;">Need similar results for your business?</h3>
+          <p class="lead">Let's plan your next project with a clear execution roadmap.</p>
+        </div>
+        <button type="button" class="btn btn-primary hover-target open-quote">Get Free Quote</button>
+      </div>
+    </section>
+
+    <section class="section container" id="testimonials">
+      <div class="section-head reveal">
+        <h2>Testimonials</h2>
+        <p class="lead">What our clients say</p>
+      </div>
+      <div class="testimonials-grid">
+        <article class="t-card reveal stagger hover-target" style="--i:0;">
+          <h3>"Amazing execution speed"</h3>
+          <p>"BG Dev Studio transformed our old website into a premium lead-generating machine."</p>
+          <p style="margin-top:10px; color:#dbe3ff;">- Founder, Urban Spaces</p>
+        </article>
+        <article class="t-card reveal stagger hover-target" style="--i:1;">
+          <h3>"Design quality is top-tier"</h3>
+          <p>"Their UI/UX detail and communication were outstanding from start to finish."</p>
+          <p style="margin-top:10px; color:#dbe3ff;">- Director, Nova Medias</p>
+        </article>
+        <article class="t-card reveal stagger hover-target" style="--i:2;">
+          <h3>"Reliable long-term partner"</h3>
+          <p>"From strategy to deployment, everything was smooth and highly professional."</p>
+          <p style="margin-top:10px; color:#dbe3ff;">- COO, Axis Infra</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="contact">
+      <div class="section-head reveal">
+        <h2>Contact</h2>
+        <p class="lead">Tell us your idea, we will build it.</p>
+      </div>
+      <div class="contact-wrap">
+        <article class="glass contact-box reveal">
+          <h3 style="margin-bottom:10px;">Start your project</h3>
+          <form class="contact-form">
+            <input class="input" type="text" placeholder="Your Name" />
+            <input class="input" type="email" placeholder="Email Address" />
+            <input class="input" type="tel" placeholder="Phone" />
+            <textarea class="input" rows="5" placeholder="Project details"></textarea>
+            <button type="button" class="btn btn-primary hover-target" style="width:max-content;">Send Enquiry</button>
+          </form>
+        </article>
+        <article class="glass contact-box reveal">
+          <h3 style="margin-bottom:12px;">Direct Connect</h3>
+          <p class="lead" style="margin-bottom:10px;">Email: bhaveshgohel4114@gmail.com</p>
+          <p class="lead" style="margin-bottom:10px;">Phone: +91 9978449457</p>
+          <p class="lead" style="margin-bottom:14px;">Ahmedabad, India</p>
+          <a class="btn btn-ghost hover-target" href="https://wa.me/919978449457" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+        </article>
+      </div>
+    </section>
+
+    <footer class="container footer reveal">
+      <p>© 2026 BG Dev Studio. Crafted with precision for premium brands.</p>
+    </footer>
+  </div>
+
+  <div class="popup-overlay" id="quotePopup" aria-hidden="true">
+    <div class="popup-card">
+      <button type="button" class="popup-close hover-target" id="closeQuotePopup" aria-label="Close quote form">✕</button>
+      <h3 class="popup-title">Get Free Quote</h3>
+      <p class="popup-sub">Share your requirements and we will connect quickly.</p>
+      <form class="popup-form" id="quoteForm">
+        <input class="input" type="text" id="quoteName" name="name" placeholder="Your Name" required />
+        <input class="input" type="email" id="quoteEmail" name="email" placeholder="Email Address" required />
+        <textarea class="input" id="quoteProject" name="project" rows="4" placeholder="Project Description" required></textarea>
+        <button type="submit" class="btn btn-primary hover-target" id="quoteSubmitBtn">Send Inquiry</button>
+        <p class="popup-status" id="quoteStatus" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <a class="wa-float hover-target" href="https://wa.me/919978449457" target="_blank" rel="noreferrer" aria-label="WhatsApp">W</a>
+
+  <script>
+    (function () {
+      const loader = document.getElementById("pageLoader");
+      window.addEventListener("load", () => {
+        setTimeout(() => loader.classList.add("hidden"), 450);
+      });
+
+      const phrases = [
+        "Websites that convert.",
+        "Apps that scale.",
+        "Brands that stand out."
+      ];
+
+      const typedText = document.getElementById("typedText");
+      const popup = document.getElementById("quotePopup");
+      const popupCard = popup ? popup.querySelector(".popup-card") : null;
+      const openQuoteButtons = document.querySelectorAll(".open-quote");
+      const closeQuotePopup = document.getElementById("closeQuotePopup");
+      const quoteForm = document.getElementById("quoteForm");
+      const quoteSubmitBtn = document.getElementById("quoteSubmitBtn");
+      const quoteStatus = document.getElementById("quoteStatus");
+      let p = 0;
+      let c = 0;
+      let deleting = false;
+
+      function typeLoop() {
+        const current = phrases[p];
+        if (!deleting) {
+          typedText.textContent = current.slice(0, c + 1);
+          c += 1;
+          if (c === current.length) {
+            deleting = true;
+            return setTimeout(typeLoop, 1000);
+          }
+        } else {
+          typedText.textContent = current.slice(0, c - 1);
+          c -= 1;
+          if (c === 0) {
+            deleting = false;
+            p = (p + 1) % phrases.length;
+          }
+        }
+        setTimeout(typeLoop, deleting ? 40 : 85);
+      }
+      typeLoop();
+
+      function openQuoteModal() {
+        if (!popup || !popupCard) return;
+        popup.style.display = "flex";
+        popup.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        gsap.set(popupCard, { scale: 0.84, y: 24, opacity: 0 });
+        gsap.to(popup, { opacity: 1, duration: 0.25, ease: "power2.out" });
+        gsap.to(popupCard, { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: "power3.out" });
+      }
+
+      function closeQuoteModal() {
+        if (!popup || !popupCard) return;
+        gsap.to(popupCard, { scale: 0.9, y: 20, opacity: 0, duration: 0.26, ease: "power2.in" });
+        gsap.to(popup, {
+          opacity: 0,
+          duration: 0.24,
+          ease: "power2.in",
+          onComplete: () => {
+            popup.style.display = "none";
+            popup.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+          }
+        });
+      }
+
+      openQuoteButtons.forEach((btn) => btn.addEventListener("click", openQuoteModal));
+      if (closeQuotePopup) closeQuotePopup.addEventListener("click", closeQuoteModal);
+      if (popup) {
+        popup.addEventListener("click", (e) => {
+          if (e.target === popup) closeQuoteModal();
+        });
+      }
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && popup && popup.style.display === "flex") closeQuoteModal();
+      });
+
+      document.querySelectorAll("[data-scroll]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-scroll");
+          const target = document.getElementById(targetId);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      const parallaxBg = document.getElementById("parallaxBg");
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY * 0.22;
+        parallaxBg.style.transform = "translateY(" + y + "px)";
+      }, { passive: true });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+      if (quoteForm && quoteSubmitBtn && quoteStatus) {
+        quoteForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("quoteName").value.trim();
+          const email = document.getElementById("quoteEmail").value.trim();
+          const project = document.getElementById("quoteProject").value.trim();
+
+          if (!name || !email || !project) {
+            quoteStatus.textContent = "Please fill all required fields.";
+            quoteStatus.className = "popup-status error";
+            return;
+          }
+
+          quoteSubmitBtn.classList.add("btn-loading");
+          quoteSubmitBtn.textContent = "Sending";
+          quoteStatus.textContent = "Submitting your inquiry...";
+          quoteStatus.className = "popup-status";
+
+          const whatsappMessage = [
+            "New Inquiry - BG Dev Studio",
+            "Name: " + name,
+            "Email: " + email,
+            "Project: " + project
+          ].join("\n");
+
+          const waUrl = "https://wa.me/919978449457?text=" + encodeURIComponent(whatsappMessage);
+          window.open(waUrl, "_blank");
+
+          try {
+            const response = await fetch("send_inquiry.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email, project })
+            });
+
+            if (!response.ok) {
+              throw new Error("Backend request failed");
+            }
+
+            quoteStatus.textContent = "Inquiry sent successfully.";
+            quoteStatus.className = "popup-status success";
+            quoteForm.reset();
+            setTimeout(() => {
+              closeQuoteModal();
+              quoteStatus.textContent = "";
+              quoteStatus.className = "popup-status";
+            }, 1400);
+          } catch (err) {
+            quoteStatus.textContent = "WhatsApp opened, but email sync failed. Please try again.";
+            quoteStatus.className = "popup-status error";
+          } finally {
+            quoteSubmitBtn.classList.remove("btn-loading");
+            quoteSubmitBtn.textContent = "Send Inquiry";
+          }
+        });
+      }
+
+      const cursorDot = document.getElementById("cursorDot");
+      const cursorRing = document.getElementById("cursorRing");
+
+      let ringX = 0;
+      let ringY = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + "px";
+        cursorDot.style.top = mouseY + "px";
+      });
+
+      function ringFollow() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorRing.style.left = ringX + "px";
+        cursorRing.style.top = ringY + "px";
+        requestAnimationFrame(ringFollow);
+      }
+      ringFollow();
+
+      document.querySelectorAll(".hover-target, a, button").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursorRing.classList.add("active"));
+        el.addEventListener("mouseleave", () => cursorRing.classList.remove("active"));
+      });
+
+      if (window.matchMedia("(max-width: 680px)").matches) {
+        cursorDot.style.display = "none";
+        cursorRing.style.display = "none";
+      }
+    })();
+  </script>
+</body>
+</html>
+
+
+

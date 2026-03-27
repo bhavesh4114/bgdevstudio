@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-dim": "#d73357",
+              "on-primary-fixed-variant": "#00207e",
+              "primary-fixed": "#859aff",
+              "surface-container": "#191919",
+              "tertiary": "#69daff",
+              "on-secondary-fixed-variant": "#7511c3",
+              "surface-tint": "#97a9ff",
+              "on-secondary-container": "#e9cdff",
+              "tertiary-dim": "#00c0ea",
+              "on-tertiary-fixed-variant": "#004a5c",
+              "on-surface": "#ffffff",
+              "primary-fixed-dim": "#718bff",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-container": "#004050",
+              "tertiary-fixed-dim": "#00c0ea",
+              "outline": "#757575",
+              "tertiary-container": "#00cffc",
+              "secondary-fixed-dim": "#dbb4ff",
+              "error": "#ff6e84",
+              "surface-container-highest": "#262626",
+              "on-secondary-fixed": "#4f0089",
+              "secondary": "#c180ff",
+              "secondary-container": "#6f00be",
+              "on-secondary": "#33005b",
+              "primary": "#97a9ff",
+              "background": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-dim": "#0e0e0e",
+              "surface-container-lowest": "#000000",
+              "inverse-surface": "#f9f9f9",
+              "tertiary-fixed": "#00cffc",
+              "primary-dim": "#3e65ff",
+              "surface-container-high": "#1f1f1f",
+              "surface": "#0e0e0e",
+              "surface-container-low": "#131313",
+              "secondary-fixed": "#e5c6ff",
+              "on-primary-container": "#001867",
+              "inverse-primary": "#134af1",
+              "secondary-dim": "#9c48ea",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "on-surface-variant": "#ababab",
+              "on-primary": "#002283",
+              "on-tertiary": "#004a5d",
+              "error-container": "#a70138",
+              "surface-variant": "#262626",
+              "outline-variant": "#484848",
+              "inverse-on-surface": "#555555",
+              "on-tertiary-fixed": "#002a35",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#859aff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .editorial-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .glass-card {
+        background: rgba(19, 19, 19, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .kinetic-gradient {
+        background: linear-gradient(135deg, #97a9ff 0%, #c180ff 100%);
+      }
+    
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            body { overflow-x: hidden; }
+        }
+            html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+            filter: blur(3px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), filter .7s cubic-bezier(.22,1,.36,1);
+            will-change: opacity, transform, filter;
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+        .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.is-visible { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+            .float-slow { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+<link rel="icon" type="image/svg+xml" href="assets/bg-logo.svg" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<div id="site-header-root"></div>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="editorial-stack">
+<span class="text-secondary font-label text-sm tracking-widest uppercase">Creative Agency</span>
+<h1 class="text-4xl sm:text-5xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface leading-none mb-6">
+                        About <span class="text-transparent bg-clip-text kinetic-gradient">BG Dev Studio</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-xl leading-relaxed font-body">
+                        BG Dev Studio is a creative web and app development agency focused on building modern, scalable, and user-friendly digital solutions. We help businesses grow online with high-performance websites and applications.
+                    </p>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-dim/10 blur-3xl rounded-full opacity-50 group-hover:opacity-75 transition duration-500"></div>
+<div class="relative aspect-square rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant/10">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Modern minimalist workspace with high-end tech equipment, ambient blue and purple studio lighting, sleek digital agency atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMVCX0bhChWjwInLrccZJfFMJJMI6nnRXPS8TWTKSp6t3rNcaIiKjkiU6aML6fsprPyoPaIEY8GWDCNKEzuoxTd4_v_ezvO3Yim71jc39fPhUWPaEqI8D_JOgZw6S7ep6iVSHnzRsLJQOBqJtC4PjXJBU7U6avYJF4IeWNQ7v1Y8zn6WuKmmDYHXgWv1YjbTOFPa2x5hldScM-dQVnTHe6BrwhbBouQN9aUl8evMqyxQuKt2tohld3a47lT4WNfghdaAP84kUKwDj-"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Mission & Vision: Bento Grid Pattern -->
+<section class="bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Our Mission -->
+<div class="md:col-span-7 p-12 rounded-xl bg-surface-container-high border border-outline-variant/10 flex flex-col justify-between min-h-[400px]">
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6" data-icon="rocket_launch">rocket_launch</span>
+<h2 class="text-4xl font-headline font-bold mb-6">Our Mission</h2>
+<p class="text-on-surface-variant text-xl leading-relaxed">To deliver high-quality digital solutions that help businesses succeed in the online world.</p>
+</div>
+<div class="mt-8 flex items-center gap-4">
+<div class="h-[2px] w-12 bg-primary"></div>
+<span class="text-xs font-label text-outline uppercase tracking-widest">Purpose Driven</span>
+</div>
+</div>
+<!-- Our Vision -->
+<div class="md:col-span-5 p-12 rounded-xl kinetic-gradient flex flex-col justify-between min-h-[400px]">
+<div>
+<span class="material-symbols-outlined text-on-primary-fixed text-4xl mb-6" data-icon="visibility">visibility</span>
+<h2 class="text-4xl font-headline font-bold mb-6 text-on-primary-fixed">Our Vision</h2>
+<p class="text-on-primary-container text-xl leading-relaxed">To become a leading digital agency known for innovation and client satisfaction.</p>
+</div>
+<div class="mt-8">
+<div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full inline-block">
+<span class="text-xs font-label text-on-primary-fixed font-bold uppercase tracking-widest">Future Focused</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Us: High-Precision Grid -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+<div class="editorial-stack mb-20 text-center items-center">
+<span class="text-secondary font-label text-sm tracking-widest uppercase">The Edge</span>
+<h2 class="text-5xl font-headline font-extrabold tracking-tight">Why Choose Us</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Why Us Item 1 -->
+<div class="p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="engineering">engineering</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-3">Experienced Developers</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">A team of veterans dedicated to writing clean, maintainable, and efficient code.</p>
+</div>
+<!-- Why Us Item 2 -->
+<div class="p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary" data-icon="terminal">terminal</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-3">Modern Technologies</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Utilizing the latest frameworks and tools to build future-proof digital experiences.</p>
+</div>
+<!-- Why Us Item 3 -->
+<div class="p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary" data-icon="bolt">bolt</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-3">Fast Support</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Rapid response times and proactive maintenance for your digital assets.</p>
+</div>
+<!-- Why Us Item 4 -->
+<div class="p-8 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-error/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-error" data-icon="payments">payments</span>
+</div>
+<h3 class="text-xl font-headline font-bold mb-3">Affordable Pricing</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Enterprise-grade quality delivered within realistic and transparent budgets.</p>
+</div>
+</div>
+</section>
+<!-- Content Canvas Separation: Tonal Shift Section -->
+<section class="bg-surface-container-lowest border-y border-outline-variant/10 py-32">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="max-w-2xl">
+<h2 class="text-4xl font-headline font-extrabold mb-6">Ready to start your digital transformation?</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">Join hands with BG Dev Studio and let's build something extraordinary together. Our team is ready to scale your vision.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<button class="px-8 py-4 bg-surface-container-high text-on-surface font-bold rounded-full hover:bg-surface-bright transition-colors text-center">
+                        Contact Us
+                    </button>
+<button class="px-8 py-4 kinetic-gradient text-on-primary-fixed font-bold rounded-full hover:opacity-90 transition-opacity text-center">
+                        Book a Consultation
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-black w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-neutral-900">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="col-span-1">
+<div class="text-lg font-black text-white mb-4">BG Dev Studio</div>
+<p class="font-manrope text-sm text-neutral-400 leading-relaxed">Building modern, scalable, and user-friendly digital solutions for the next generation of business.</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 text-sm">Navigation</h4>
+<ul class="space-y-4 font-manrope text-sm text-neutral-400">
+<li><a class="hover:text-blue-400 transition-colors" href="index.html">Home</a></li>
+<li><a class="text-white" href="about.html">About</a></li>
+<li><a class="hover:text-blue-400 transition-colors" href="service.html">Services</a></li>
+<li><a class="hover:text-blue-400 transition-colors" href="portfolio.html">Portfolio</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 text-sm">Company</h4>
+<ul class="space-y-4 font-manrope text-sm text-neutral-400">
+<li><span class="hover:text-blue-400 transition-colors">Careers</span></li>
+<li><span class="hover:text-blue-400 transition-colors">Privacy Policy</span></li>
+<li><span class="hover:text-blue-400 transition-colors">Terms of Service</span></li>
+<li><a class="hover:text-blue-400 transition-colors" href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 text-sm">Contact Info</h4>
+<ul class="space-y-4 font-manrope text-sm text-neutral-400">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="mail">mail</span>
+                        bhaveshgohel4114@gmail.com
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="call">call</span>
+                        +91 9978449457
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="location_on">location_on</span>
+                        Ahmedabad, India
+                    </li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-900 flex justify-between items-center">
+<div class="flex gap-4">
+<span class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined" data-icon="language">language</span></span>
+<span class="text-neutral-500 hover:text-white transition-colors"><span class="material-symbols-outlined" data-icon="code">code</span></span>
+</div>
+</div>
+</footer>
+<script>
+(function () {
+  const sectionTargets = document.querySelectorAll('section, footer');
+  const cardTargets = document.querySelectorAll('.group, .glass-panel, .rounded-xl, .rounded-2xl, .rounded-3xl');
+  const unique = new Set();
+  [...sectionTargets, ...cardTargets].forEach((el) => {
+    if (!el || unique.has(el)) return;
+    unique.add(el);
+    el.classList.add('reveal');
+  });
+
+  document.querySelectorAll('.glass-panel').forEach((el) => el.classList.add('float-slow'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  let i = 0;
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.style.transitionDelay = (i % 6) * 60 + 'ms';
+    observer.observe(el);
+    i += 1;
+  });
+})();
+</script>
+
+<script src="script.js" defer></script>
+</body></html>
+
+
+
+
+
+
+
+

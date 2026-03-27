@@ -1,0 +1,14 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BG Dev Studio logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3ea0ff"/>
+      <stop offset="100%" stop-color="#8d4dff"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#0b0f1d"/>
+  <rect x="16" y="16" width="480" height="480" rx="84" fill="none" stroke="url(#g)" stroke-width="12"/>
+  <text x="256" y="248" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="178" fill="#f7f9ff" font-weight="700">BG</text>
+  <text x="256" y="328" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" letter-spacing="3" fill="#d4dcff">STUDIO</text>
+  <text x="256" y="372" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" fill="#a8b3de">Web &amp; App</text>
+  <text x="256" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" fill="#a8b3de">Development</text>
+</svg>

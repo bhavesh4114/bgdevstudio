@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact - BG Dev Studio</title>
+<link rel="icon" type="image/svg+xml" href="assets/bg-logo.svg" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-dim": "#d73357",
+              "on-primary-fixed-variant": "#00207e",
+              "primary-fixed": "#859aff",
+              "surface-container": "#191919",
+              "tertiary": "#69daff",
+              "on-secondary-fixed-variant": "#7511c3",
+              "surface-tint": "#97a9ff",
+              "on-secondary-container": "#e9cdff",
+              "tertiary-dim": "#00c0ea",
+              "on-tertiary-fixed-variant": "#004a5c",
+              "on-surface": "#ffffff",
+              "primary-fixed-dim": "#718bff",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-container": "#004050",
+              "tertiary-fixed-dim": "#00c0ea",
+              "outline": "#757575",
+              "tertiary-container": "#00cffc",
+              "secondary-fixed-dim": "#dbb4ff",
+              "error": "#ff6e84",
+              "surface-container-highest": "#262626",
+              "on-secondary-fixed": "#4f0089",
+              "secondary": "#c180ff",
+              "secondary-container": "#6f00be",
+              "on-secondary": "#33005b",
+              "primary": "#97a9ff",
+              "background": "#0e0e0e",
+              "on-background": "#ffffff",
+              "surface-dim": "#0e0e0e",
+              "surface-container-lowest": "#000000",
+              "inverse-surface": "#f9f9f9",
+              "tertiary-fixed": "#00cffc",
+              "primary-dim": "#3e65ff",
+              "surface-container-high": "#1f1f1f",
+              "surface": "#0e0e0e",
+              "surface-container-low": "#131313",
+              "secondary-fixed": "#e5c6ff",
+              "on-primary-container": "#001867",
+              "inverse-primary": "#134af1",
+              "secondary-dim": "#9c48ea",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "on-surface-variant": "#ababab",
+              "on-primary": "#002283",
+              "on-tertiary": "#004a5d",
+              "error-container": "#a70138",
+              "surface-variant": "#262626",
+              "outline-variant": "#484848",
+              "inverse-on-surface": "#555555",
+              "on-tertiary-fixed": "#002a35",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#859aff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0e0e0e; color: #ffffff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(19, 19, 19, 0.6); backdrop-filter: blur(20px); }
+        .kinetic-gradient { background: linear-gradient(135deg, #97a9ff 0%, #c180ff 100%); }
+    
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 767px) {
+            body { overflow-x: hidden; }
+        }
+            html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+            filter: blur(3px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), filter .7s cubic-bezier(.22,1,.36,1);
+            will-change: opacity, transform, filter;
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+        .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal.is-visible { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+            .float-slow { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="font-body selection:bg-primary/30">
+<!-- TopNavBar Implementation -->
+<div id="site-header-root"></div>
+<main class="pt-32 pb-20 px-6 max-w-7xl mx-auto overflow-hidden">
+<!-- Editorial Header -->
+<div class="mb-20">
+<p class="font-label text-secondary text-sm font-semibold tracking-widest uppercase mb-4">Get In Touch</p>
+<h1 class="font-headline text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter max-w-3xl leading-[1.1]">
+                Let's build something <span class="text-primary">extraordinary</span> together.
+            </h1>
+</div>
+<!-- Main Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Contact Form Section -->
+<div class="lg:col-span-7 bg-surface-container-low p-8 md:p-12 rounded-xl relative overflow-hidden group">
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-500"></div>
+<form class="relative z-10 space-y-8" id="contactWhatsappForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label text-sm text-on-surface-variant" for="name">Name</label>
+<input class="w-full bg-surface-container-lowest border-none outline-none ring-1 ring-outline-variant/15 focus:ring-2 focus:ring-primary rounded-lg px-4 py-3 text-on-surface transition-all duration-300" id="name" placeholder="John Doe" required="" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-sm text-on-surface-variant" for="email">Email</label>
+<input class="w-full bg-surface-container-lowest border-none outline-none ring-1 ring-outline-variant/15 focus:ring-2 focus:ring-primary rounded-lg px-4 py-3 text-on-surface transition-all duration-300" id="email" placeholder="john@example.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-sm text-on-surface-variant" for="message">Message</label>
+<textarea class="w-full bg-surface-container-lowest border-none outline-none ring-1 ring-outline-variant/15 focus:ring-2 focus:ring-primary rounded-lg px-4 py-3 text-on-surface transition-all duration-300 resize-none" id="message" placeholder="Tell us about your project..." required="" rows="5"></textarea>
+</div>
+<button class="kinetic-gradient w-full md:w-auto px-10 py-4 rounded-full font-headline font-bold text-lg hover:scale-[0.98] transition-transform duration-300 shadow-[0_0_20px_rgba(151,169,255,0.2)]" type="submit">
+                        Send On WhatsApp
+                    </button>
+<p class="text-sm text-on-surface-variant" id="contactFormStatus"></p>
+</form>
+</div>
+<!-- Contact Information Bento Column -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<!-- Contact Info Card -->
+<div class="bg-surface-container-high p-8 rounded-xl flex-grow group hover:bg-surface-bright transition-colors duration-300">
+<h3 class="font-headline text-2xl font-bold mb-8">Contact Information</h3>
+<div class="space-y-8">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<div class="min-w-0">
+<p class="text-on-surface-variant text-sm font-medium mb-1">Email us</p>
+<p class="text-lg font-headline font-semibold break-all leading-tight">bhaveshgohel4114@gmail.com</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">call</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-medium mb-1">Call us</p>
+<p class="text-lg font-headline font-semibold">+91 9978449457</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">location_on</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-medium mb-1">Visit us</p>
+<p class="text-lg font-headline font-semibold">Ahmedabad, India</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Stylized Location Graphic / Map Placeholder -->
+<div class="relative h-64 rounded-xl overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10 opacity-60"></div>
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" data-alt="Modern dark monochromatic night city aerial view with glowing blue and purple architectural highlights in Ahmedabad" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXSaYeBAQ_JvA9PRz-UKRI7EUNJ5bU0EhfjtvS5GWmcXmReM_ZJK3LxIYHkBc_c9grmG7XKVfTAida0tyavFLk4uSUP6SwQwVYgDjC9PVTTIbrWMmCAoAypjWAMrVizB3-YcfGcqq26578T_HvMvM7VnRnmyL1JzwKEqRKjbEFqk34DFz1uHUK8xrqZoE9kLq4RKuGGys1AcZMgEz71ZAuJihLIuc-u3KTm1q8JMf_QbDykW8qbFU79kLyb9Rx6bykW8yWkTwKFn_4"/>
+<div class="absolute bottom-6 left-6 z-20">
+<span class="px-3 py-1 bg-primary text-on-primary-fixed text-xs font-bold rounded-full mb-2 inline-block">OUR BASE</span>
+<h4 class="font-headline text-xl font-bold text-white tracking-tight">Ahmedabad HQ</h4>
+</div>
+</div>
+</div>
+</div>
+<!-- Social Proof/Network Section -->
+<div class="mt-20 pt-20 border-t border-outline-variant/10">
+<p class="font-label text-center text-on-surface-variant text-xs tracking-widest uppercase mb-12">Connect with us on social</p>
+<div class="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<span class="font-headline font-black text-2xl">LINKEDIN</span>
+<span class="font-headline font-black text-2xl">DRIBBBLE</span>
+<span class="font-headline font-black text-2xl">GITHUB</span>
+<span class="font-headline font-black text-2xl">X / TWITTER</span>
+</div>
+</div>
+</main>
+<!-- Footer Implementation -->
+<footer class="w-full py-12 px-4 sm:px-6 lg:px-8 border-t border-neutral-900 bg-black">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div>
+<div class="text-lg font-black text-white mb-4 font-headline tracking-tighter">BG Dev Studio</div>
+<p class="font-manrope text-sm text-neutral-400 max-w-xs">
+                    Architecting the future of digital experiences through precision engineering and kinetic design.
+                </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 font-headline">Navigation</h4>
+<ul class="space-y-2">
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="index.html">Home</a></li>
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="about.html">About</a></li>
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="service.html">Services</a></li>
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="portfolio.html">Portfolio</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 font-headline">Contact</h4>
+<ul class="space-y-2">
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="mailto:bhaveshgohel4114@gmail.com">bhaveshgohel4114@gmail.com</a></li>
+<li><a class="font-manrope text-sm text-neutral-500 hover:text-blue-400 transition-colors" href="tel:+919978449457">+91 9978449457</a></li>
+<li class="font-manrope text-sm text-neutral-500">Ahmedabad, India</li>
+</ul>
+</div>
+<div class="flex flex-col justify-between">
+<div>
+<h4 class="text-white font-bold mb-4 font-headline">Newsletter</h4>
+<div class="flex bg-surface-container rounded-full p-1">
+<input class="bg-transparent border-none focus:ring-0 text-xs px-4 flex-grow" placeholder="Your email" type="text"/>
+<button class="bg-primary text-on-primary-container p-2 rounded-full">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="mt-8 text-neutral-600 font-manrope text-[10px] tracking-widest uppercase"></div>
+</div>
+</div>
+</footer>
+<script>
+(function () {
+  const sectionTargets = document.querySelectorAll('section, footer');
+  const cardTargets = document.querySelectorAll('.group, .glass-panel, .rounded-xl, .rounded-2xl, .rounded-3xl');
+  const unique = new Set();
+  [...sectionTargets, ...cardTargets].forEach((el) => {
+    if (!el || unique.has(el)) return;
+    unique.add(el);
+    el.classList.add('reveal');
+  });
+
+  document.querySelectorAll('.glass-panel').forEach((el) => el.classList.add('float-slow'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  let i = 0;
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.style.transitionDelay = (i % 6) * 60 + 'ms';
+    observer.observe(el);
+    i += 1;
+  });
+
+  const contactForm = document.getElementById('contactWhatsappForm');
+  const formStatus = document.getElementById('contactFormStatus');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const name = document.getElementById('name')?.value.trim();
+      const email = document.getElementById('email')?.value.trim();
+      const message = document.getElementById('message')?.value.trim();
+
+      if (!name || !email || !message) {
+        if (formStatus) formStatus.textContent = 'Please fill all fields.';
+        return;
+      }
+
+      const text = [
+        'New Contact Inquiry - BG Dev Studio',
+        'Name: ' + name,
+        'Email: ' + email,
+        'Message: ' + message
+      ].join('\n');
+
+      const whatsappUrl = 'https://wa.me/919978449457?text=' + encodeURIComponent(text);
+      window.open(whatsappUrl, '_blank');
+
+      if (formStatus) formStatus.textContent = 'WhatsApp opened with your message.';
+      contactForm.reset();
+    });
+  }
+})();
+</script>
+
+<script src="script.js" defer></script>
+</body></html>
+
+
+
+
+
+
+
