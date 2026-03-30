@@ -202,28 +202,9 @@
   const initAgencyChatWidget = () => {
     if (document.getElementById('bgdsChatWidget')) return;
 
-    const WHATSAPP_NUMBER = '919978449457';
-    const WHATSAPP_PREFILL = 'Hello, I want to know more about your services.';
-    const DEFAULT_FALLBACK = 'Please contact us on WhatsApp for more details.';
-    const WELCOME_MESSAGE = 'Hi 👋 Welcome to BG Dev Studio! Ask anything about websites or apps.';
-
-    const qaRules = [
-      { keywords: ['price', 'cost', 'budget', 'fees'], answer: 'Website starts from ₹5,000 depending on features.' },
-      { keywords: ['time', 'timeline', 'how long', 'delivery'], answer: 'It usually takes 5–10 days to complete a website.' },
-      { keywords: ['services', 'service', 'offer'], answer: 'We provide website, app, and custom software development.' },
-      { keywords: ['contact', 'call', 'reach'], answer: 'You can connect with us on WhatsApp for quick response.' },
-      { keywords: ['portfolio', 'work', 'projects'], answer: 'We have built multiple modern business websites.' },
-      { keywords: ['hosting', 'domain', 'server'], answer: 'We also provide hosting and domain setup.' },
-      { keywords: ['payment', 'upi', 'bank'], answer: 'We accept UPI, bank transfer, and online payments.' },
-      { keywords: ['support', 'help', 'after delivery'], answer: 'We provide full support after delivery.' },
-      { keywords: ['design', 'ui', 'ux'], answer: 'We create modern, responsive UI/UX designs.' },
-      { keywords: ['seo', 'ranking', 'google'], answer: 'Basic SEO is included in all websites.' },
-      { keywords: ['maintenance', 'maintain', 'monthly'], answer: 'We offer monthly maintenance services.' },
-      { keywords: ['mobile', 'responsive', 'phone'], answer: 'All websites are mobile responsive.' },
-      { keywords: ['custom', 'feature', 'integration'], answer: 'We build custom features as per your needs.' },
-      { keywords: ['ecommerce', 'store', 'shop', 'payment gateway'], answer: 'We build online stores with payment integration.' },
-      { keywords: ['app', 'android', 'ios'], answer: 'Yes, we also build custom mobile apps for business needs.' }
-    ];
+    const STORAGE_KEY = 'bgds_chat_history_v1';
+    const WHATSAPP_URL = 'https://wa.me/919978449457?text=Hi%20I%20want%20a%20website';
+    const WELCOME_MESSAGE = 'Hi, welcome to BG Dev Studio. What type of website do you need?';
 
     const widget = document.createElement('div');
     widget.className = 'bgds-chat-widget';
@@ -235,16 +216,20 @@
             <h3>BG Dev Studio</h3>
             <p>Quick Help Assistant</p>
           </div>
-          <button class="bgds-close" id="bgdsClose" aria-label="Close chat" type="button">×</button>
+          <button class="bgds-close" id="bgdsClose" aria-label="Close chat" type="button">x</button>
         </header>
         <div class="bgds-chat-body" id="bgdsChatBody"></div>
         <div class="bgds-chat-whatsapp-wrap" id="bgdsWhatsWrap">
-          <a class="bgds-wa-btn" id="bgdsWhatsBtn" target="_blank" rel="noopener noreferrer" href="#">Chat on WhatsApp</a>
+          <a class="bgds-wa-btn" id="bgdsWhatsBtn" target="_blank" rel="noopener noreferrer" href="#">
+            Chat on WhatsApp
+          </a>
         </div>
         <div class="bgds-chat-input-wrap">
           <input class="bgds-chat-input" id="bgdsInput" type="text" placeholder="Type your message..." maxlength="300" />
           <button class="bgds-send" id="bgdsSend" type="button" aria-label="Send message">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 2.6a1.3 1.3 0 0 0-1.4-.2L2.9 9.3a1.3 1.3 0 0 0 .1 2.5l5.5 1.8 1.8 5.5a1.3 1.3 0 0 0 2.5.1l6.9-17.1a1.3 1.3 0 0 0-.3-1.5Z"></path></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.4 2.6a1.3 1.3 0 0 0-1.4-.2L2.9 9.3a1.3 1.3 0 0 0 .1 2.5l5.5 1.8 1.8 5.5a1.3 1.3 0 0 0 2.5.1l6.9-17.1a1.3 1.3 0 0 0-.3-1.5Z"></path>
+            </svg>
           </button>
         </div>
       </section>
@@ -263,6 +248,7 @@
         </svg>
       </button>
     `;
+
     document.body.appendChild(widget);
 
     const fab = widget.querySelector('#bgdsFab');
@@ -273,70 +259,169 @@
     const chatBody = widget.querySelector('#bgdsChatBody');
     const whatsBtn = widget.querySelector('#bgdsWhatsBtn');
     const whatsWrap = widget.querySelector('#bgdsWhatsWrap');
+
     if (!fab || !card || !closeBtn || !input || !sendBtn || !chatBody || !whatsBtn || !whatsWrap) return;
 
-    const toggleChat = (forceOpen) => {
-      const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !card.classList.contains('is-open');
-      card.classList.toggle('is-open', shouldOpen);
-      card.setAttribute('aria-hidden', String(!shouldOpen));
-      if (shouldOpen) window.setTimeout(() => input.focus(), 100);
+    const state = {
+      history: [],
+      userMessageCount: 0,
+      ctaShown: false
     };
 
-    const appendMessage = (text, from) => {
-      const msg = document.createElement('div');
-      msg.className = `bgds-msg ${from === 'user' ? 'is-user' : 'is-bot'}`;
-      msg.textContent = text;
-      chatBody.appendChild(msg);
+    const toggleChat = (forceOpen) => {
+      const shouldOpen = typeof forceOpen === 'boolean'
+        ? forceOpen
+        : !card.classList.contains('is-open');
+
+      card.classList.toggle('is-open', shouldOpen);
+      card.setAttribute('aria-hidden', String(!shouldOpen));
+
+      if (shouldOpen) {
+        window.setTimeout(() => input.focus(), 120);
+      }
+    };
+
+    const saveHistory = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.history));
+      } catch (error) {
+        // no-op if storage is unavailable
+      }
+    };
+
+    const scrollToBottom = () => {
       chatBody.scrollTop = chatBody.scrollHeight;
     };
 
-    const appendTyping = () => {
+    const appendMessage = (message, shouldPersist = true) => {
+      const msg = document.createElement('div');
+      msg.className = `bgds-msg ${message.role === 'user' ? 'is-user' : 'is-bot'}`;
+      if (message.type === 'link') {
+        msg.innerHTML = `${message.text} <a href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a>`;
+      } else {
+        msg.textContent = message.text;
+      }
+      chatBody.appendChild(msg);
+      scrollToBottom();
+
+      if (shouldPersist) {
+        state.history.push(message);
+        saveHistory();
+      }
+
+      if (message.role === 'user') {
+        state.userMessageCount += 1;
+      }
+    };
+
+    const appendTypingMessage = () => {
       const typing = document.createElement('div');
       typing.className = 'bgds-msg is-bot is-typing';
       typing.innerHTML = '<span></span><span></span><span></span>';
       chatBody.appendChild(typing);
-      chatBody.scrollTop = chatBody.scrollHeight;
+      scrollToBottom();
       return typing;
     };
 
-    const findReply = (question) => {
-      const lower = question.toLowerCase();
-      for (const rule of qaRules) {
-        if (rule.keywords.some((keyword) => lower.includes(keyword))) return rule.answer;
-      }
-      return DEFAULT_FALLBACK;
+    const showWhatsAppCTA = () => {
+      if (state.ctaShown) return;
+      whatsWrap.classList.add('is-visible');
+      state.ctaShown = true;
     };
 
-    whatsBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
-    whatsWrap.classList.add('is-visible');
-    appendMessage(WELCOME_MESSAGE, 'bot');
+    const maybeShowLeadCTA = () => {
+      if (state.ctaShown || state.userMessageCount < 3) return;
+      appendMessage(
+        {
+          role: 'bot',
+          type: 'link',
+          text: 'Do you want a website? Click below to contact on WhatsApp.'
+        },
+        true
+      );
+      showWhatsAppCTA();
+    };
+
+    const getBotReply = (question) => {
+      const lower = question.toLowerCase();
+      if (lower.includes('website')) {
+        return 'We build fast, modern business websites with design, development, and support. What type of website do you need?';
+      }
+      if (lower.includes('price')) {
+        return 'Our website packages start from ₹4999+ depending on pages and features.';
+      }
+      if (lower.includes('booking')) {
+        return 'We create booking systems with calendar slots, confirmations, and admin management for your business.';
+      }
+      if (lower.includes('contact')) {
+        return 'You can connect with us directly on WhatsApp for a quick discussion.';
+      }
+      return 'Thanks for your message. Tell me your business type and goal, and I will suggest the best website solution for you.';
+    };
+
+    const loadHistory = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return false;
+        state.history = parsed;
+        parsed.forEach((message) => {
+          appendMessage(message, false);
+          if (message.type === 'link') {
+            state.ctaShown = true;
+          }
+        });
+        state.userMessageCount = parsed.filter((message) => message.role === 'user').length;
+        return parsed.length > 0;
+      } catch (error) {
+        return false;
+      }
+    };
 
     const handleSend = () => {
-      const text = (input.value || '').trim();
-      if (!text) return;
-      appendMessage(text, 'user');
+      const userText = (input.value || '').trim();
+      if (!userText) return;
+
+      appendMessage({ role: 'user', type: 'text', text: userText }, true);
       input.value = '';
-      const typingNode = appendTyping();
-      const answer = findReply(text);
-      const delay = 2000 + Math.floor(Math.random() * 1000);
+
+      const typingNode = appendTypingMessage();
       window.setTimeout(() => {
         typingNode.remove();
-        appendMessage(answer, 'bot');
-      }, delay);
+        const answer = getBotReply(userText);
+        const replyType = userText.toLowerCase().includes('contact') ? 'link' : 'text';
+        appendMessage({ role: 'bot', type: replyType, text: answer }, true);
+        if (replyType === 'link') showWhatsAppCTA();
+        maybeShowLeadCTA();
+      }, 1000);
     };
+
+    whatsBtn.href = WHATSAPP_URL;
+    const hasHistory = loadHistory();
+    if (!hasHistory) {
+      appendMessage({ role: 'bot', type: 'text', text: WELCOME_MESSAGE }, true);
+    } else if (state.ctaShown) {
+      showWhatsAppCTA();
+    }
 
     fab.addEventListener('click', () => toggleChat());
     closeBtn.addEventListener('click', () => toggleChat(false));
     sendBtn.addEventListener('click', handleSend);
+
     input.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') handleSend();
     });
+
     document.addEventListener('click', (event) => {
       if (!card.classList.contains('is-open')) return;
       if (!widget.contains(event.target)) toggleChat(false);
     });
+
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && card.classList.contains('is-open')) toggleChat(false);
+      if (event.key === 'Escape' && card.classList.contains('is-open')) {
+        toggleChat(false);
+      }
     });
   };
 
